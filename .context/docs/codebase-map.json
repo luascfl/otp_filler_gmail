@@ -1,0 +1,319 @@
+{
+  "version": "1.0.0",
+  "generated": "2026-07-23T19:28:39.266Z",
+  "stack": {
+    "primaryLanguage": "javascript",
+    "languages": [
+      "javascript"
+    ],
+    "frameworks": [],
+    "buildTools": [],
+    "testFrameworks": [],
+    "packageManager": "npm",
+    "isMonorepo": false,
+    "hasDocker": false,
+    "hasCI": false,
+    "runtimeEnvironment": "node"
+  },
+  "structure": {
+    "totalFiles": 19,
+    "rootPath": ".",
+    "topDirectories": [
+      {
+        "name": "icons",
+        "fileCount": 3,
+        "description": "Icon definitions"
+      },
+      {
+        "name": "privacy-policy",
+        "fileCount": 1,
+        "description": "Module directory"
+      }
+    ],
+    "languageDistribution": [
+      {
+        "extension": ".js",
+        "count": 6
+      },
+      {
+        "extension": ".html",
+        "count": 3
+      },
+      {
+        "extension": ".json",
+        "count": 3
+      },
+      {
+        "extension": ".md",
+        "count": 3
+      },
+      {
+        "extension": ".png",
+        "count": 3
+      },
+      {
+        "extension": ".css",
+        "count": 1
+      }
+    ]
+  },
+  "architecture": {
+    "layers": [],
+    "patterns": [],
+    "entryPoints": [],
+    "mainEntryPoints": [],
+    "moduleExports": []
+  },
+  "symbols": {
+    "classes": [
+      {
+        "name": "FakeElement",
+        "kind": "class",
+        "file": "popup.test.js",
+        "line": 6,
+        "exported": false
+      }
+    ],
+    "interfaces": [],
+    "functions": [
+      {
+        "name": "addAccount",
+        "kind": "function",
+        "file": "popup.js",
+        "line": 225,
+        "exported": false
+      },
+      {
+        "name": "addAccount",
+        "kind": "function",
+        "file": "background.js",
+        "line": 142,
+        "exported": false
+      },
+      {
+        "name": "autoCopy",
+        "kind": "function",
+        "file": "popup.js",
+        "line": 47,
+        "exported": false
+      },
+      {
+        "name": "buildAuthUrl",
+        "kind": "function",
+        "file": "background.js",
+        "line": 114,
+        "exported": false
+      },
+      {
+        "name": "decodeBase64",
+        "kind": "function",
+        "file": "background.js",
+        "line": 215,
+        "exported": false
+      },
+      {
+        "name": "doFetch",
+        "kind": "function",
+        "file": "popup.js",
+        "line": 247,
+        "exported": false
+      },
+      {
+        "name": "escHtml",
+        "kind": "function",
+        "file": "popup.js",
+        "line": 30,
+        "exported": false
+      },
+      {
+        "name": "extractOTP",
+        "kind": "function",
+        "file": "background.js",
+        "line": 309,
+        "exported": false
+      },
+      {
+        "name": "extractTextFromPayload",
+        "kind": "function",
+        "file": "background.js",
+        "line": 243,
+        "exported": false
+      },
+      {
+        "name": "fetchAllOTPs",
+        "kind": "function",
+        "file": "background.js",
+        "line": 402,
+        "exported": false
+      },
+      {
+        "name": "fetchOTPsForAccount",
+        "kind": "function",
+        "file": "background.js",
+        "line": 367,
+        "exported": false
+      },
+      {
+        "name": "fillSingle",
+        "kind": "function",
+        "file": "content.js",
+        "line": 138,
+        "exported": false
+      },
+      {
+        "name": "fillSplit",
+        "kind": "function",
+        "file": "content.js",
+        "line": 142,
+        "exported": false
+      },
+      {
+        "name": "findOTPField",
+        "kind": "function",
+        "file": "content.js",
+        "line": 63,
+        "exported": false
+      },
+      {
+        "name": "findSplitOTPFields",
+        "kind": "function",
+        "file": "content.js",
+        "line": 35,
+        "exported": false
+      },
+      {
+        "name": "findSubmitButton",
+        "kind": "function",
+        "file": "content.js",
+        "line": 157,
+        "exported": false
+      },
+      {
+        "name": "getAccounts",
+        "kind": "function",
+        "file": "background.js",
+        "line": 80,
+        "exported": false
+      },
+      {
+        "name": "getClientId",
+        "kind": "function",
+        "file": "background.js",
+        "line": 7,
+        "exported": false
+      },
+      {
+        "name": "getNearbyText",
+        "kind": "function",
+        "file": "content.js",
+        "line": 99,
+        "exported": false
+      },
+      {
+        "name": "getToken",
+        "kind": "function",
+        "file": "background.js",
+        "line": 98,
+        "exported": false
+      },
+      {
+        "name": "getValidToken",
+        "kind": "function",
+        "file": "background.js",
+        "line": 187,
+        "exported": false
+      },
+      {
+        "name": "gmailFetch",
+        "kind": "function",
+        "file": "background.js",
+        "line": 207,
+        "exported": false
+      },
+      {
+        "name": "init",
+        "kind": "function",
+        "file": "popup.js",
+        "line": 283,
+        "exported": false
+      },
+      {
+        "name": "isVisible",
+        "kind": "function",
+        "file": "content.js",
+        "line": 87,
+        "exported": false
+      },
+      {
+        "name": "launchAuth",
+        "kind": "function",
+        "file": "background.js",
+        "line": 125,
+        "exported": false
+      },
+      {
+        "name": "looksLikeJunkNumberContext",
+        "kind": "function",
+        "file": "background.js",
+        "line": 290,
+        "exported": false
+      },
+      {
+        "name": "looksLikeOTPEmail",
+        "kind": "function",
+        "file": "background.js",
+        "line": 350,
+        "exported": false
+      },
+      {
+        "name": "makeIcon",
+        "kind": "function",
+        "file": "generate-icons.js",
+        "line": 22,
+        "exported": false
+      },
+      {
+        "name": "normalizeOTP",
+        "kind": "function",
+        "file": "background.js",
+        "line": 254,
+        "exported": false
+      },
+      {
+        "name": "parseSender",
+        "kind": "function",
+        "file": "background.js",
+        "line": 356,
+        "exported": false
+      }
+    ],
+    "types": [],
+    "enums": []
+  },
+  "publicAPI": [],
+  "dependencies": {
+    "mostImported": []
+  },
+  "stats": {
+    "totalSymbols": 48,
+    "exportedSymbols": 0,
+    "analysisTimeMs": 289
+  },
+  "keyFiles": [
+    {
+      "path": "package.json",
+      "description": "Package manifest",
+      "category": "config"
+    }
+  ],
+  "navigation": {
+    "tests": "**/*.test.{ts,js}",
+    "config": [
+      "package.json"
+    ],
+    "types": [],
+    "mainLogic": [
+      "src"
+    ]
+  }
+}

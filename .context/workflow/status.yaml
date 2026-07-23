@@ -1,0 +1,36 @@
+project:
+  name: "secure-gmail-otp-fork"
+  scale: MEDIUM
+  started: "2026-07-23T19:29:14.981Z"
+  current_phase: P
+
+phases:
+  P:
+    status: in_progress
+    started_at: "2026-07-23T19:29:14.981Z"
+  R:
+    status: pending
+  E:
+    status: pending
+  V:
+    status: pending
+  C:
+    status: skipped
+    reason: "Not required for scale MEDIUM"
+
+execution:
+  history:
+    - timestamp: "2026-07-23T19:29:14.981Z"
+      phase: P
+      action: started
+    - timestamp: "2026-07-23T19:29:14.986Z"
+      phase: C
+      action: phase_skipped
+  last_activity: "2026-07-23T19:29:14.986Z"
+  resume_context: "Fase P (Planejamento) em progresso"
+
+settings:
+  autonomous_mode: true
+  require_plan: true
+  require_approval: true
+
