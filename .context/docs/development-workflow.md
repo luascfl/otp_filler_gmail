@@ -4,35 +4,87 @@ name: development-workflow
 description: Day-to-day engineering processes, branching, and contribution guidelines
 category: workflow
 generated: 2026-07-23
-status: filled
+status: unfilled
 scaffoldVersion: "2.0.0"
 ---
+## Development Workflow
 
-# Development workflow
+This document outlines the day-to-day engineering process for contributing to this repository.
 
-Work in small security-focused stories. Each story must have a single owner, explicit DoD, observable validation and an update to `.context/plans/STATE.md` or `.context/workflow/prd.json` when state changes.
+Following these guidelines ensures consistent code quality and smooth collaboration across the team.
 
-## Branching and releases
+## Branching & Releases
 
-- Upstream remote starts at `jiahongc/otp-filler-for-gmail-extension`.
-- Personal fork work should happen on focused branches after Lucas creates or points a fork remote.
-- Do not publish store artifacts until OAuth, permissions, clipboard and fill behavior are audited.
-- Keep `manifest.json` untracked because it contains the personal OAuth client ID.
+**Branching Model**: Feature branches off `main`
 
-## Local development
+- `main` — Production-ready code, always deployable
+- `feature/*` — New features and enhancements
+- `fix/*` — Bug fixes
+- `chore/*` — Maintenance and tooling updates
 
+**Release Process**:
+1. Features are developed in branches
+2. PRs require review and passing CI
+3. Merged PRs are deployed automatically (or tagged for release)
+
+**Versioning**: Semantic versioning (semver) - MAJOR.MINOR.PATCH
+
+## Local Development
+
+**Setup**:
 ```bash
+# Clone and install
+git clone <repository-url>
+cd <project-name>
 npm install
-npm test
-cp manifest.example.json manifest.json
 ```
 
-Then edit `manifest.json` with a personal OAuth client ID and load the repository through `chrome://extensions` as an unpacked extension.
+**Daily Commands**:
+- `npm run dev` — Start development server/watch mode
+- `npm run build` — Build for production
+- `npm run test` — Run test suite
+- `npm run lint` — Check code style
 
-## Code review expectations
+**Before Committing**:
+```bash
+npm run lint && npm run test && npm run build
+```
 
-Review security-sensitive changes first: Gmail scope, token storage, remote endpoints, clipboard writes, content-script injection and any automatic click/submit behavior. A change is not complete until the relevant tests or smoke scenario proves the DoD.
+## Code Review Expectations
 
-## Onboarding tasks
+**PR Requirements**:
+- Clear description of changes and motivation
+- Tests for new functionality
+- Documentation updates for API changes
+- Passing CI checks
 
-Start with `README.md`, `.context/docs/project-overview.md`, `.context/plans/PROJECT.md`, `.context/workflow/prd.json` and the current story in `.context/plans/STATE.md`.
+**Review Checklist**:
+- [ ] Code follows project conventions
+- [ ] Tests cover the changes adequately
+- [ ] No security vulnerabilities introduced
+- [ ] Documentation is updated
+- [ ] Commit messages follow conventions
+
+**Approval**: At least one approving review required before merge.
+
+See [AGENTS.md](../../AGENTS.md) for AI assistant collaboration guidelines.
+
+## Onboarding Tasks
+
+**First Steps for New Contributors**:
+1. Read the [Project Overview](./project-overview.md)
+2. Set up local development environment
+3. Run the test suite to verify setup
+4. Look for issues labeled `good-first-issue` or `help-wanted`
+
+**Helpful Resources**:
+- [Architecture Notes](./architecture.md) — System design overview
+- [Testing Strategy](./testing-strategy.md) — How to write tests
+- [CONTRIBUTING.md](../../CONTRIBUTING.md) — Contribution guidelines
+
+## Related Resources
+
+<!-- Link to related documents for cross-navigation. -->
+
+- [testing-strategy.md](./testing-strategy.md)
+- [tooling.md](./tooling.md)

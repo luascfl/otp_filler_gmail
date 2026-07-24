@@ -4,56 +4,104 @@ name: project-overview
 description: High-level overview of the project, its purpose, and key components
 category: overview
 generated: 2026-07-23
-status: filled
+status: unfilled
 scaffoldVersion: "2.0.0"
 ---
+## Project Overview
 
-# Project overview
+This project provides [describe main functionality]. It helps [target users] to [key benefit].
 
-This repository is a personal security-first fork of `jiahongc/otp-filler-for-gmail-extension`. It is a Chromium extension that reads recent Gmail messages through the Gmail API, extracts one-time login codes, and fills OTP inputs only when the user explicitly asks.
+The codebase is organized to support [main use case] with a focus on [key qualities like maintainability, performance, etc.].
 
-> Detailed analysis: for symbol counts, entry points and code structure, see [`codebase-map.json`](./codebase-map.json).
+## Codebase Reference
 
-## Quick facts
+> **Detailed Analysis**: For complete symbol counts, architecture layers, and dependency graphs, see [`codebase-map.json`](./codebase-map.json).
 
-- Root: `/home/lucas/Downloads/extension_manager`
-- Primary language: JavaScript
-- Runtime targets: Chromium Manifest V3 service worker, popup UI and injected content script
-- Package manager: npm
-- Test runner: Node.js built-in `node --test`
-- Full analysis: [`codebase-map.json`](./codebase-map.json)
+## Quick Facts
 
-## Entry points
+- **Root**: `./`
+- **Primary Language**: [Language] ([X] files)
+- **Entry Point**: `src/index.ts` or `src/main.ts`
+- **Full Analysis**: [`codebase-map.json`](./codebase-map.json)
 
-- [`background.js`](../../background.js) handles OAuth, Gmail API calls, OTP extraction and extension messages.
-- [`popup.js`](../../popup.js) renders the popup, account controls, code list and fill/copy actions.
-- [`content.js`](../../content.js) is injected on demand into the active tab to detect and fill OTP fields.
-- [`manifest.example.json`](../../manifest.example.json) declares Manifest V3 permissions, OAuth client configuration and extension metadata.
+## Entry Points
 
-## Key exports
+- **Main Entry**: `src/index.ts` - Primary module exports
+- **CLI**: `src/cli.ts` - Command-line interface (if applicable)
+- **Server**: `src/server.ts` - HTTP server entry (if applicable)
 
-The only CommonJS exports are test-facing helpers from `background.js`: `extractOTP`, `looksLikeOTPEmail`, `normalizeOTP`, `scoreOTPCandidate` and `stripHtml`. See [`codebase-map.json`](./codebase-map.json) for the complete symbol map.
+## Key Exports
 
-## File structure and code organization
+See [`codebase-map.json`](./codebase-map.json) for the complete list of exported symbols.
 
-- `background.js` contains Gmail/OAuth logic and message dispatch.
-- `content.js` contains page-level field detection and OTP filling.
-- `popup.html`, `popup.css`, `popup.js` define the browser action UI.
-- `background.test.js` and `popup.test.js` cover extraction and popup behavior.
-- `icons/` contains generated extension icons.
-- `privacy-policy/` and `STORE_LISTING.md` are store/privacy artifacts from upstream.
-- `.context/docs/` is the AI Coders Context technical documentation.
-- `.context/plans/` is the GSD macro plan.
-- `.context/workflow/` is the Ralph-style story, DoD and validation state.
+Key public APIs:
+- [List main exported classes/functions]
 
-## Technology stack summary
+## File Structure & Code Organization
 
-The project is plain JavaScript with no build step. It uses Chrome extension APIs, Gmail API OAuth scope `https://www.googleapis.com/auth/gmail.readonly`, and Node's built-in test runner. The security model depends on local-only processing, short-lived tokens in `chrome.storage.session`, and avoiding automatic sensitive actions unless explicitly approved.
+- `src/` — Source code and main application logic
+- `tests/` or `__tests__/` — Test files and fixtures
+- `dist/` or `build/` — Compiled output (gitignored)
+- `docs/` — Documentation files
+- `scripts/` — Build and utility scripts
 
-## Getting started checklist
+## Technology Stack Summary
 
-1. Install dependencies with `npm install`.
-2. Copy `manifest.example.json` to `manifest.json` and add a personal Google OAuth client ID.
-3. Run `npm test` before loading the extension.
-4. Load the repository as an unpacked extension in `chrome://extensions`.
-5. Validate security-sensitive changes against `.context/workflow/prd.json` and `.context/plans/STATE.md`.
+**Runtime**: Node.js
+
+**Language**: TypeScript/JavaScript
+
+**Build Tools**:
+- TypeScript compiler (tsc) or bundler (esbuild, webpack, etc.)
+- Package manager: npm/yarn/pnpm
+
+**Code Quality**:
+- Linting: ESLint
+- Formatting: Prettier
+- Type checking: TypeScript strict mode
+
+## Core Framework Stack
+
+<!-- Document core frameworks per layer (backend, frontend, data, messaging). Mention architectural patterns enforced by these frameworks. -->
+
+_Add descriptive content here (optional)._
+
+## UI & Interaction Libraries
+
+<!-- List UI kits, CLI interaction helpers, or design system dependencies. Note theming, accessibility, or localization considerations. -->
+
+_Add descriptive content here (optional)._
+
+## Development Tools Overview
+
+See [Tooling](./tooling.md) for detailed development environment setup.
+
+**Essential Commands**:
+- `npm install` — Install dependencies
+- `npm run build` — Build the project
+- `npm run test` — Run tests
+- `npm run dev` — Start development mode
+
+## Getting Started Checklist
+
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Copy environment template: `cp .env.example .env` (if applicable)
+4. Run tests to verify setup: `npm run test`
+5. Start development: `npm run dev`
+6. Review [Development Workflow](./development-workflow.md) for day-to-day tasks
+
+## Next Steps
+
+- Review [Architecture](./architecture.md) for system design details
+- See [Development Workflow](./development-workflow.md) for contribution guidelines
+- Check [Testing Strategy](./testing-strategy.md) for quality requirements
+
+## Related Resources
+
+<!-- Link to related documents for cross-navigation. -->
+
+- [architecture.md](./architecture.md)
+- [development-workflow.md](./development-workflow.md)
+- [tooling.md](./tooling.md)
+- [codebase-map.json](./codebase-map.json)

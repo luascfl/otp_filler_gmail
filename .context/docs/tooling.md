@@ -4,37 +4,85 @@ name: tooling
 description: Scripts, IDE settings, automation, and developer productivity tips
 category: tooling
 generated: 2026-07-23
-status: filled
+status: unfilled
 scaffoldVersion: "2.0.0"
 ---
+## Tooling & Productivity Guide
 
-# Tooling and productivity guide
+This guide covers the tools, scripts, and configurations that make development efficient.
 
-This project deliberately uses a small toolchain. Prefer direct JavaScript, extension APIs and `node --test` over new build layers.
+Following these setup recommendations ensures a consistent development experience across the team.
 
-## Required tooling
+## Required Tooling
 
-- Node.js and npm: install dependencies and run tests.
-- Chromium browser: load and smoke test the unpacked extension.
-- Google Cloud Console: create the personal OAuth client with Gmail API enabled.
-- AI Coders Context: `.context/docs` technical context.
-- GSD: `.context/plans` milestones and decisions.
-- Ralph-style workflow: `.context/workflow/prd.json` story state and DoD.
-- Graphify: `.context/graphify-out` structural graph when code changes affect architecture or cross-module relationships.
+**Runtime**:
+- Node.js (v18+ recommended)
+- npm / yarn / pnpm
 
-## Recommended automation
+**Version Management** (recommended):
+- [nvm](https://github.com/nvm-sh/nvm) for Node.js version management
+- `.nvmrc` file specifies project Node version
 
+**Installation**:
 ```bash
-npm test
-graphify update .
+# Using nvm (recommended)
+nvm install
+nvm use
+
+# Install dependencies
+npm install
 ```
 
-Run Graphify after code changes when the graph tool is available. Keep generated context inside `.context`; do not create `.context/skills` or `.context/agents` for this project.
+## Recommended Automation
 
-## IDE/editor setup
+**Pre-commit Hooks**:
+The project uses [husky](https://typicode.github.io/husky/) for git hooks:
+- Pre-commit: Runs linting and type checking
+- Commit message: Validates commit message format
 
-Use plain JavaScript syntax highlighting. There is no TypeScript, bundler or formatter configuration in the upstream project.
+**Code Quality Commands**:
+```bash
+npm run lint          # Check code style
+npm run lint:fix      # Auto-fix style issues
+npm run format        # Format code with Prettier
+npm run typecheck     # TypeScript type checking
+```
 
-## Productivity tips
+**Watch Mode**:
+```bash
+npm run dev           # Development with hot reload
+npm run test:watch    # Tests in watch mode
+```
 
-Keep `manifest.json` local and untracked. Use `manifest.example.json` as the reviewable template. Avoid adding scripts for one-off diagnostics unless they become part of the canonical workflow.
+## IDE / Editor Setup
+
+**VS Code Recommended Extensions**:
+- ESLint — Inline linting
+- Prettier — Code formatting
+- TypeScript + JavaScript Language Features — IntelliSense
+- Error Lens — Inline error highlighting
+
+**Workspace Settings**:
+The `.vscode/` folder contains shared settings:
+- `settings.json` — Editor configuration
+- `extensions.json` — Recommended extensions
+- `launch.json` — Debug configurations
+
+## Productivity Tips
+
+**Useful Aliases**:
+```bash
+alias nr='npm run'
+alias nrd='npm run dev'
+alias nrt='npm run test'
+```
+
+**Quick Commands**:
+- `npm run build && npm run test` — Full verification before PR
+- `npm run clean` — Clear build artifacts and caches
+
+## Related Resources
+
+<!-- Link to related documents for cross-navigation. -->
+
+- [development-workflow.md](./development-workflow.md)

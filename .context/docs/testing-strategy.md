@@ -4,38 +4,99 @@ name: testing-strategy
 description: Test frameworks, patterns, coverage requirements, and quality gates
 category: testing
 generated: 2026-07-23
-status: filled
+status: unfilled
 scaffoldVersion: "2.0.0"
 ---
+## Testing Strategy
 
-# Testing strategy
+This document outlines the testing strategy for maintaining code quality.
 
-Quality is maintained with focused Node tests plus manual Chrome smoke tests for extension behavior that depends on browser APIs. Security stories must validate the exact sensitive path they change.
+**Testing Philosophy**:
+- Tests should be fast, isolated, and deterministic
+- Follow the test pyramid: many unit tests, fewer integration tests, minimal E2E tests
+- Test behavior, not implementation details
+- Every bug fix should include a regression test
 
-## Test types
+## Test Types
 
-- Unit: `node --test`, files named `*.test.js`.
-- Popup behavior: `popup.test.js` runs `popup.js` in a VM with fake DOM and Chrome APIs.
-- OTP extraction: `background.test.js` covers parsing, filtering and false-positive cases.
-- Manual smoke: load unpacked extension, authenticate with personal OAuth, fetch a recent OTP and fill a test page.
+**Unit Tests**:
+- Framework: Jest / Vitest
+- Location: `__tests__/` or co-located `*.test.ts` files
+- Purpose: Test individual functions and components in isolation
+- Mocking: Use jest mocks for external dependencies
 
-## Running tests
+**Integration Tests**:
+- Framework: Jest / Vitest
+- Location: `tests/integration/` or `*.integration.test.ts`
+- Purpose: Test feature workflows and component interactions
+- Setup: May require test database or external services
 
+**E2E Tests** (if applicable):
+- Framework: Playwright / Cypress
+- Location: `e2e/` or `tests/e2e/`
+- Purpose: Test critical user paths end-to-end
+- Environment: Requires full application stack
+
+## Running Tests
+
+**Commands**:
 ```bash
-npm test
-node --test background.test.js
-node --test popup.test.js
+# Run all tests
+npm run test
+
+# Run tests in watch mode (for development)
+npm run test -- --watch
+
+# Run tests with coverage report
+npm run test -- --coverage
+
+# Run specific test file
+npm run test -- path/to/file.test.ts
+
+# Run tests matching pattern
+npm run test -- --testNamePattern="pattern"
 ```
 
-No watch or coverage command is defined in `package.json`.
+## Quality Gates
 
-## Quality gates
+**Coverage Requirements**:
+- Minimum overall coverage: 80%
+- New code should have higher coverage
+- Critical paths require 100% coverage
 
-- `npm test` must pass before a story is closed.
-- Manifest permissions must stay limited to `identity`, `storage`, `activeTab`, `scripting` and Google API host permissions unless a story explicitly changes that contract.
-- No new remote endpoint is allowed without updating privacy docs and PRD risk notes.
-- No auto-submit or implicit clipboard behavior should be introduced in the hardened fork.
+**Pre-merge Checks**:
+- [ ] All tests pass
+- [ ] Coverage thresholds met
+- [ ] Linting passes (`npm run lint`)
+- [ ] Type checking passes (`npm run typecheck`)
+- [ ] Build succeeds (`npm run build`)
+
+**CI Pipeline**:
+- Tests run automatically on every PR
+- Coverage reports generated and compared to baseline
+- Failed checks block merge
 
 ## Troubleshooting
 
-If browser behavior cannot be covered by Node tests, record the manual smoke path in `.context/plans/STATE.md` with the tested browser, page and result.
+**Common Issues**:
+
+*Tests timing out*:
+- Increase timeout for slow operations
+- Check for unresolved promises
+- Verify mocks are properly configured
+
+*Flaky tests*:
+- Avoid time-dependent assertions
+- Use proper async/await patterns
+- Isolate tests from external state
+
+*Environment issues*:
+- Ensure Node version matches project requirements
+- Clear node_modules and reinstall if dependencies are corrupted
+- Check for conflicting global installations
+
+## Related Resources
+
+<!-- Link to related documents for cross-navigation. -->
+
+- [development-workflow.md](./development-workflow.md)

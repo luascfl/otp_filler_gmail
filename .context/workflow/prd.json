@@ -1,0 +1,19 @@
+{
+  "name": "Gmail OTP Filler Setup",
+  "description": "Restore the OTP filler and get it running locally.",
+  "status": "in_progress",
+  "stories": [
+    {
+      "id": "story-1",
+      "title": "Restore Codebase and Load Extension",
+      "description": "Restore the OTP filler codebase, update the manifest, and load it into Chrome to verify basic UI and missing configs.",
+      "acceptanceCriteria": [
+        "Codebase restored.",
+        "manifest.json exists.",
+        "Extension loads in Chrome without critical parsing errors.",
+        "User confirms UI opens."
+      ],
+      "status": "in_progress"
+    }
+  ]
+}
