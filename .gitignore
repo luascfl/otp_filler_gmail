@@ -20,3 +20,4 @@ gcp-oauth.keys.json
 dist/
 build/
 *.zip
+AGENTS.md
