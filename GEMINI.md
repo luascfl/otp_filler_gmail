@@ -525,7 +525,7 @@ exemplo_gemini_mcp:
     comando: "npx"
     args: ["-y", "@modelcontextprotocol/server-slack"]
     env:
-      SLACK_BOT_TOKEN: "xoxb-seu-token"
+      SLACK_BOT_TOKEN: "<seu-token-aqui>"
       SLACK_TEAM_ID: "T01234567"
   filesystem:
     comando: "npx"
