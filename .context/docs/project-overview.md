@@ -1,107 +1,41 @@
 ---
 type: doc
 name: project-overview
-description: High-level overview of the project, its purpose, and key components
+description: High-level overview of the Gmail OTP browser extension
 category: overview
-generated: 2026-07-23
-status: unfilled
+generated: 2026-08-23
+status: filled
 scaffoldVersion: "2.0.0"
 ---
-## Project Overview
+## Project overview
 
-This project provides [describe main functionality]. It helps [target users] to [key benefit].
+OTP Filler for Gmail is a Manifest V3 browser extension for Chrome and Firefox. It reads recent Gmail messages with the read-only Gmail API scope, extracts likely verification codes, detects OTP forms, and fills or submits them locally.
 
-The codebase is organized to support [main use case] with a focus on [key qualities like maintainability, performance, etc.].
+## Supported browsers and distribution
 
-## Codebase Reference
+- Chrome uses `manifest.json` and the Chrome Web Store OAuth redirect.
+- Firefox uses `manifest-firefox-mv3.json`, fixed add-on ID `otp-filler-gmail@luascfl.github.io`, and an AMO-signed unlisted XPI for private installation.
+- The Firefox OAuth redirect is `https://b08a966e2cd56d5fdbe08615b80148bd4f58eaf3.extensions.allizom.org/`.
 
-> **Detailed Analysis**: For complete symbol counts, architecture layers, and dependency graphs, see [`codebase-map.json`](./codebase-map.json).
+## Main components
 
-## Quick Facts
+- `background.js`: OAuth, token lifecycle, Gmail API access, OTP extraction, account management, and bounded polling.
+- `content.js`: OTP field detection, polling trigger, code filling, and submit behavior.
+- `popup.html`, `popup.js`, `popup.css`: account and code user interface.
+- `manifest.json`: Chrome runtime contract.
+- `manifest-firefox-mv3.json`: Firefox runtime, permissions, add-on identity, and Mozilla data declarations.
 
-- **Root**: `./`
-- **Primary Language**: [Language] ([X] files)
-- **Entry Point**: `src/index.ts` or `src/main.ts`
-- **Full Analysis**: [`codebase-map.json`](./codebase-map.json)
+## Development commands
 
-## Entry Points
+```bash
+npm test
+npm run build:firefox
+npm run package:firefox
+AMO_API_KEY='user:...' AMO_API_SECRET='...' npm run sign:firefox
+```
 
-- **Main Entry**: `src/index.ts` - Primary module exports
-- **CLI**: `src/cli.ts` - Command-line interface (if applicable)
-- **Server**: `src/server.ts` - HTTP server entry (if applicable)
+`npm run package:firefox` creates an unsigned validation archive. Permanent Firefox installation requires the signed XPI returned by `npm run sign:firefox`.
 
-## Key Exports
+## Current state
 
-See [`codebase-map.json`](./codebase-map.json) for the complete list of exported symbols.
-
-Key public APIs:
-- [List main exported classes/functions]
-
-## File Structure & Code Organization
-
-- `src/` — Source code and main application logic
-- `tests/` or `__tests__/` — Test files and fixtures
-- `dist/` or `build/` — Compiled output (gitignored)
-- `docs/` — Documentation files
-- `scripts/` — Build and utility scripts
-
-## Technology Stack Summary
-
-**Runtime**: Node.js
-
-**Language**: TypeScript/JavaScript
-
-**Build Tools**:
-- TypeScript compiler (tsc) or bundler (esbuild, webpack, etc.)
-- Package manager: npm/yarn/pnpm
-
-**Code Quality**:
-- Linting: ESLint
-- Formatting: Prettier
-- Type checking: TypeScript strict mode
-
-## Core Framework Stack
-
-<!-- Document core frameworks per layer (backend, frontend, data, messaging). Mention architectural patterns enforced by these frameworks. -->
-
-_Add descriptive content here (optional)._
-
-## UI & Interaction Libraries
-
-<!-- List UI kits, CLI interaction helpers, or design system dependencies. Note theming, accessibility, or localization considerations. -->
-
-_Add descriptive content here (optional)._
-
-## Development Tools Overview
-
-See [Tooling](./tooling.md) for detailed development environment setup.
-
-**Essential Commands**:
-- `npm install` — Install dependencies
-- `npm run build` — Build the project
-- `npm run test` — Run tests
-- `npm run dev` — Start development mode
-
-## Getting Started Checklist
-
-1. Clone the repository
-2. Install dependencies: `npm install`
-3. Copy environment template: `cp .env.example .env` (if applicable)
-4. Run tests to verify setup: `npm run test`
-5. Start development: `npm run dev`
-6. Review [Development Workflow](./development-workflow.md) for day-to-day tasks
-
-## Next Steps
-
-- Review [Architecture](./architecture.md) for system design details
-- See [Development Workflow](./development-workflow.md) for contribution guidelines
-- Check [Testing Strategy](./testing-strategy.md) for quality requirements
-
-## Related Resources
-
-<!-- Link to related documents for cross-navigation. -->
-
-- [architecture.md](./architecture.md)
-- [development-workflow.md](./development-workflow.md)
-- [tooling.md](./tooling.md)
-- [codebase-map.json](./codebase-map.json)
+The Firefox source variant builds cleanly with `web-ext lint`, its manifest and OAuth redirect are covered by tests, and the unsigned private package exists under `web-ext-artifacts/`. AMO signing and signed-XPI installation require the owner's AMO JWT credentials. The Google OAuth client must include the Firefox redirect URI before Gmail login can succeed.

@@ -11,6 +11,7 @@ class FakeElement {
     this.disabled = false;
     this.textContent = "";
     this.innerHTML = "";
+    this.children = [];
   }
 
   addEventListener(type, listener) {
@@ -19,12 +20,15 @@ class FakeElement {
 
   appendChild(child) {
     this.child = child;
+    this.children.push(child);
   }
 
   querySelector(selector) {
-    if (selector === ".copy-btn") {
-      this.copyButton ||= new FakeElement();
-      return this.copyButton;
+    const className = selector.startsWith(".") ? selector.slice(1) : "";
+    for (const child of this.children) {
+      if (child.className?.split(" ").includes(className)) return child;
+      const nested = child.querySelector(selector);
+      if (nested) return nested;
     }
     return null;
   }
@@ -81,7 +85,7 @@ test("copy button keeps its success state after clipboard write resolves", async
     []
   );
 
-  const copyButton = codesList.child.copyButton;
+  const copyButton = codesList.child.querySelector(".copy-btn");
   const event = { currentTarget: copyButton, stopPropagation() {} };
   const handling = copyButton.listeners.click(event);
 

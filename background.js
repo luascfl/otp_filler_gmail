@@ -1,4 +1,6 @@
 // background.js — Service Worker (multi-account)
+let activePoll = null;
+let seenMessageIds = new Set();
 
 const GMAIL_API_BASE = "https://www.googleapis.com/gmail/v1";
 const MAX_EMAILS_TO_SCAN = 10;
@@ -384,6 +386,7 @@ async function fetchOTPsForAccount(token, accountEmail) {
 
       const { name, email } = parseSender(from);
       return {
+        messageId: id,
         code: otp,
         senderName: name,
         senderEmail: email,
@@ -456,6 +459,30 @@ if (typeof chrome !== "undefined" && chrome.runtime?.onMessage) {
       fetchAllOTPs(msg.filterEmail || null)
         .then((result) => sendResponse({ ok: true, codes: result.codes, accountErrors: result.errors }))
         .catch((err) => sendResponse({ ok: false, error: err.message }));
+      return true;
+    }
+
+    if (msg.type === "START_POLLING") {
+      if (activePoll !== null) return;
+
+      activePoll = setInterval(async () => {
+        const { codes } = await fetchAllOTPs();
+        const newCode = codes.find(code => !seenMessageIds.has(code.messageId));
+
+        if (newCode) {
+          seenMessageIds.add(newCode.messageId);
+          chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            if (tabs[0]) {
+              chrome.tabs.sendMessage(tabs[0].id, { type: "OTP_FOUND", code: newCode.code });
+            }
+          });
+        }
+      }, 3000);
+
+      setTimeout(() => {
+        clearInterval(activePoll);
+        activePoll = null;
+      }, 180000);
       return true;
     }
 

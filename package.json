@@ -1,10 +1,13 @@
 {
   "name": "gmail-otp-filler",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Automatically extracts verification codes from Gmail and fills them into web forms.",
   "main": "background.js",
   "scripts": {
-    "test": "node --test"
+    "test": "node --test",
+    "build:firefox": "rm -rf dist/firefox && mkdir -p dist/firefox/icons && cp background.js content.js popup.js popup.html popup.css dist/firefox/ && cp icons/icon16.png icons/icon48.png icons/icon128.png dist/firefox/icons/ && cp manifest-firefox-mv3.json dist/firefox/manifest.json && web-ext lint --source-dir dist/firefox --warnings-as-errors",
+    "package:firefox": "npm run build:firefox && web-ext build --source-dir dist/firefox --artifacts-dir web-ext-artifacts --filename otp-filler-gmail-firefox-1.2.1.zip --overwrite-dest",
+    "sign:firefox": "npm run build:firefox && web-ext sign --source-dir dist/firefox --artifacts-dir web-ext-artifacts --channel unlisted --api-key \"$AMO_API_KEY\" --api-secret \"$AMO_API_SECRET\""
   },
   "keywords": [],
   "author": "",

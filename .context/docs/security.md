@@ -1,74 +1,51 @@
 ---
 type: doc
 name: security
-description: Security policies, authentication, secrets management, and compliance requirements
+description: OAuth, sensitive data, permissions, and private distribution controls
 category: security
-generated: 2026-07-23
-status: unfilled
+generated: 2026-08-23
+status: filled
 scaffoldVersion: "2.0.0"
 ---
-## Security & Compliance Notes
+## Security and compliance notes
 
-This document outlines security practices, policies, and guidelines for this project.
+## Authentication
 
-**Security Principles**:
-- Defense in depth — Multiple security layers
-- Principle of least privilege — Minimal necessary access
-- Secure by default — Safe configurations out of the box
+The extension uses `chrome.identity.launchWebAuthFlow` with Google's OAuth implicit flow and scope `https://www.googleapis.com/auth/gmail.readonly`.
 
-## Authentication & Authorization
+- The OAuth access token expires after roughly one hour.
+- Silent reauthentication uses `prompt=none` when the Google session is still available.
+- A failed silent refresh requires the user to remove and re-add the Gmail account.
+- Removing an account attempts Google's token revocation endpoint before local deletion.
 
-**Authentication**:
-- [Describe authentication mechanism: JWT, sessions, OAuth, etc.]
-- Token/session expiration: [Duration]
-- Refresh strategy: [How tokens are refreshed]
+## Sensitive data lifecycle
 
-**Authorization**:
-- Permission model: [RBAC, ABAC, etc.]
-- Role definitions: [Admin, User, etc.]
-- Access control enforcement: [Where/how permissions are checked]
+| Data | Storage | Lifetime |
+| --- | --- | --- |
+| Gmail account email and display name | `chrome.storage.local` | Until account removal |
+| OAuth access token and expiry | `chrome.storage.session` | Browser session or account removal |
+| Email subject, snippet, and body used for extraction | Memory only | Current fetch and extraction |
+| Extracted OTP and seen message IDs | Memory only | Current popup or polling session |
 
-## Secrets & Sensitive Data
+No email content or token is written to project storage, analytics, or a project-owned server.
 
-**Secrets Management**:
-- Storage: Environment variables / secrets manager
-- Never commit secrets to version control
-- Use `.env.example` as a template (without real values)
+## Permissions
 
-**Sensitive Data Handling**:
-- Encryption at rest: [Yes/No, method]
-- Encryption in transit: TLS 1.2+
-- Data classification: [Public, Internal, Confidential, Restricted]
+- `identity`: Google OAuth.
+- `storage`: account metadata and session-only token state.
+- `activeTab` and `scripting`: manual filler injection.
+- `https://www.googleapis.com/*`: Gmail, user info, and token operations.
+- `<all_urls>`: automatic OTP form detection and fill across websites.
 
-**Best Practices**:
-- Rotate secrets regularly
-- Use strong, unique passwords
-- Audit access to sensitive data
+Firefox's `data_collection_permissions.required` categories describe data processed locally for the extension feature. They do not add a network destination or analytics pipeline.
 
-## Compliance & Policies
+## Secret handling
 
-**Applicable Standards**:
-- [List relevant compliance frameworks]
+- OAuth client JSON files match `*client_secret*.json` in `.gitignore`.
+- AMO credentials are accepted only through `AMO_API_KEY` and `AMO_API_SECRET` environment variables.
+- `dist/firefox` and `web-ext-artifacts` are generated from a fixed runtime allowlist. Credential JSON, `.context`, tests, logs, and repository metadata are excluded.
+- Do not paste AMO JWT secrets into issues, commits, README examples, or shell history.
 
-**Security Policies**:
-- Code review required for all changes
-- Dependency scanning for vulnerabilities
-- Regular security assessments
+## Distribution trust
 
-## Incident Response
-
-**Reporting Security Issues**:
-- Report security vulnerabilities to [security contact]
-- Do not disclose publicly before fix is available
-
-**Incident Response**:
-1. Identify and contain the issue
-2. Assess impact and scope
-3. Remediate and recover
-4. Document and learn from the incident
-
-## Related Resources
-
-<!-- Link to related documents for cross-navigation. -->
-
-- [architecture.md](./architecture.md)
+Regular Firefox requires Mozilla's signature for permanent installation. The project uses AMO's `unlisted` channel so the signed XPI can be distributed privately without a public listing. The signed XPI must be retained as the installable artifact and verified before use.

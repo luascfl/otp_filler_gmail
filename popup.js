@@ -27,11 +27,6 @@ function setStatus(text, type = "") {
   statusEl.className = "status " + type;
 }
 
-function escHtml(str) {
-  const d = document.createElement("div");
-  d.textContent = str;
-  return d.innerHTML;
-}
 
 function timeAgo(timestamp) {
   if (!timestamp) return "";
@@ -136,21 +131,43 @@ function renderCodes(codes, accounts, shouldAutoCopy = false) {
     const card = document.createElement("div");
     card.className = "code-item" + (i === 0 ? " selected" : "");
 
-    let accountLine = "";
-    if (multiAccount) {
-      accountLine = `<div class="code-item-account">via ${escHtml(item.accountEmail)}</div>`;
-    }
+    const header = document.createElement("div");
+    header.className = "code-item-header";
 
-    card.innerHTML = `
-      <div class="code-item-header">
-        <span class="code-item-sender">${escHtml(item.senderName)}</span>
-        <span class="code-item-time">${escHtml(timeAgo(item.timestamp))}</span>
-        <button class="copy-btn" title="Copy code">&#x29C9;</button>
-      </div>
-      <div class="code-item-code">${escHtml(item.code)}</div>
-      <div class="code-item-email">${escHtml(item.senderEmail)}</div>
-      ${accountLine}
-    `;
+    const sender = document.createElement("span");
+    sender.className = "code-item-sender";
+    sender.textContent = item.senderName;
+
+    const timestamp = document.createElement("span");
+    timestamp.className = "code-item-time";
+    timestamp.textContent = timeAgo(item.timestamp);
+
+    const copyButton = document.createElement("button");
+    copyButton.className = "copy-btn";
+    copyButton.title = "Copy code";
+    copyButton.textContent = "\u29c9";
+
+    header.appendChild(sender);
+    header.appendChild(timestamp);
+    header.appendChild(copyButton);
+    card.appendChild(header);
+
+    const code = document.createElement("div");
+    code.className = "code-item-code";
+    code.textContent = item.code;
+    card.appendChild(code);
+
+    const email = document.createElement("div");
+    email.className = "code-item-email";
+    email.textContent = item.senderEmail;
+    card.appendChild(email);
+
+    if (multiAccount) {
+      const account = document.createElement("div");
+      account.className = "code-item-account";
+      account.textContent = `via ${item.accountEmail}`;
+      card.appendChild(account);
+    }
 
     card.addEventListener("click", () => {
       codesList.querySelectorAll(".code-item").forEach((el) => el.classList.remove("selected"));
@@ -160,7 +177,7 @@ function renderCodes(codes, accounts, shouldAutoCopy = false) {
       autoCopy(item.code);
     });
 
-    card.querySelector(".copy-btn").addEventListener("click", async (e) => {
+    copyButton.addEventListener("click", async (e) => {
       e.stopPropagation();
       const btn = e.currentTarget;
       try {
@@ -172,7 +189,7 @@ function renderCodes(codes, accounts, shouldAutoCopy = false) {
       btn.textContent = "\u2713";
       btn.classList.add("copied");
       setStatus(`Copied ${item.code}`, "success");
-      setTimeout(() => { btn.innerHTML = "&#x29C9;"; btn.classList.remove("copied"); }, 1500);
+      setTimeout(() => { btn.textContent = "\u29c9"; btn.classList.remove("copied"); }, 1500);
     });
 
     codesList.appendChild(card);
@@ -187,18 +204,27 @@ function renderCodes(codes, accounts, shouldAutoCopy = false) {
 
 function renderAccountsList(accounts) {
   accountsList.innerHTML = "";
-
   for (const acct of accounts) {
     const row = document.createElement("div");
     row.className = "account-row";
-    row.innerHTML = `
-      <div class="account-info">
-        <div class="account-email">${escHtml(acct.email)}</div>
-      </div>
-      <button class="remove-btn" title="Remove account">&times;</button>
-    `;
 
-    row.querySelector(".remove-btn").addEventListener("click", async () => {
+    const accountInfo = document.createElement("div");
+    accountInfo.className = "account-info";
+
+    const accountEmail = document.createElement("div");
+    accountEmail.className = "account-email";
+    accountEmail.textContent = acct.email;
+    accountInfo.appendChild(accountEmail);
+
+    const removeButton = document.createElement("button");
+    removeButton.className = "remove-btn";
+    removeButton.title = "Remove account";
+    removeButton.textContent = "\u00d7";
+
+    row.appendChild(accountInfo);
+    row.appendChild(removeButton);
+
+    removeButton.addEventListener("click", async () => {
       const res = await send("REMOVE_ACCOUNT", { email: acct.email });
       if (res?.ok) {
         if (filterEmail === acct.email) filterEmail = null;

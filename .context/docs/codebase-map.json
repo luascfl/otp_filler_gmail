@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "generated": "2026-07-23T22:06:44.348Z",
+  "generated": "2026-08-23T18:18:49.748Z",
   "stack": {
     "primaryLanguage": "javascript",
     "languages": [
@@ -9,19 +9,30 @@
     "frameworks": [],
     "buildTools": [],
     "testFrameworks": [],
-    "packageManager": null,
+    "packageManager": "npm",
     "isMonorepo": false,
     "hasDocker": false,
-    "hasCI": false
+    "hasCI": false,
+    "runtimeEnvironment": "node"
   },
   "structure": {
-    "totalFiles": 24,
+    "totalFiles": 30,
     "rootPath": ".",
     "topDirectories": [
       {
-        "name": "_legacy_otp_filler",
-        "fileCount": 20,
+        "name": "icons",
+        "fileCount": 3,
+        "description": "Icon definitions"
+      },
+      {
+        "name": "privacy-policy",
+        "fileCount": 1,
         "description": "Module directory"
+      },
+      {
+        "name": "web-ext-artifacts",
+        "fileCount": 1,
+        "description": "Web-ext-artifact definitions"
       }
     ],
     "languageDistribution": [
@@ -30,20 +41,24 @@
         "count": 7
       },
       {
-        "extension": ".md",
-        "count": 6
+        "extension": ".json",
+        "count": 7
       },
       {
-        "extension": ".json",
-        "count": 4
+        "extension": ".png",
+        "count": 5
+      },
+      {
+        "extension": ".md",
+        "count": 5
       },
       {
         "extension": ".html",
         "count": 3
       },
       {
-        "extension": ".png",
-        "count": 3
+        "extension": ".zip",
+        "count": 2
       },
       {
         "extension": ".css",
@@ -63,7 +78,7 @@
       {
         "name": "FakeElement",
         "kind": "class",
-        "file": "_legacy_otp_filler/popup.test.js",
+        "file": "popup.test.js",
         "line": 6,
         "exported": false
       }
@@ -73,211 +88,211 @@
       {
         "name": "addAccount",
         "kind": "function",
-        "file": "_legacy_otp_filler/popup.js",
-        "line": 225,
+        "file": "popup.js",
+        "line": 251,
         "exported": false
       },
       {
         "name": "addAccount",
         "kind": "function",
-        "file": "_legacy_otp_filler/background.js",
-        "line": 142,
+        "file": "background.js",
+        "line": 144,
         "exported": false
       },
       {
         "name": "autoCopy",
         "kind": "function",
-        "file": "_legacy_otp_filler/popup.js",
-        "line": 47,
+        "file": "popup.js",
+        "line": 42,
         "exported": false
       },
       {
         "name": "buildAuthUrl",
         "kind": "function",
-        "file": "_legacy_otp_filler/background.js",
-        "line": 114,
+        "file": "background.js",
+        "line": 116,
         "exported": false
       },
       {
         "name": "decodeBase64",
         "kind": "function",
-        "file": "_legacy_otp_filler/background.js",
-        "line": 215,
+        "file": "background.js",
+        "line": 217,
         "exported": false
       },
       {
         "name": "doFetch",
         "kind": "function",
-        "file": "_legacy_otp_filler/popup.js",
-        "line": 247,
-        "exported": false
-      },
-      {
-        "name": "escHtml",
-        "kind": "function",
-        "file": "_legacy_otp_filler/popup.js",
-        "line": 30,
-        "exported": false
-      },
-      {
-        "name": "evaluateContext",
-        "kind": "function",
-        "file": "background.js",
-        "line": 25,
+        "file": "popup.js",
+        "line": 273,
         "exported": false
       },
       {
         "name": "extractOTP",
         "kind": "function",
-        "file": "_legacy_otp_filler/background.js",
-        "line": 309,
+        "file": "background.js",
+        "line": 311,
         "exported": false
       },
       {
         "name": "extractTextFromPayload",
         "kind": "function",
-        "file": "_legacy_otp_filler/background.js",
-        "line": 243,
+        "file": "background.js",
+        "line": 245,
         "exported": false
       },
       {
         "name": "fetchAllOTPs",
         "kind": "function",
-        "file": "_legacy_otp_filler/background.js",
-        "line": 402,
+        "file": "background.js",
+        "line": 405,
         "exported": false
       },
       {
         "name": "fetchOTPsForAccount",
         "kind": "function",
-        "file": "_legacy_otp_filler/background.js",
-        "line": 367,
+        "file": "background.js",
+        "line": 369,
         "exported": false
       },
       {
         "name": "fillSingle",
         "kind": "function",
-        "file": "_legacy_otp_filler/content.js",
-        "line": 138,
+        "file": "content.js",
+        "line": 140,
         "exported": false
       },
       {
         "name": "fillSplit",
         "kind": "function",
-        "file": "_legacy_otp_filler/content.js",
-        "line": 142,
+        "file": "content.js",
+        "line": 144,
         "exported": false
       },
       {
         "name": "findOTPField",
         "kind": "function",
-        "file": "_legacy_otp_filler/content.js",
-        "line": 63,
+        "file": "content.js",
+        "line": 65,
         "exported": false
       },
       {
         "name": "findSplitOTPFields",
         "kind": "function",
-        "file": "_legacy_otp_filler/content.js",
-        "line": 35,
+        "file": "content.js",
+        "line": 37,
         "exported": false
       },
       {
         "name": "findSubmitButton",
         "kind": "function",
-        "file": "_legacy_otp_filler/content.js",
-        "line": 157,
+        "file": "content.js",
+        "line": 159,
         "exported": false
       },
       {
         "name": "getAccounts",
         "kind": "function",
-        "file": "_legacy_otp_filler/background.js",
-        "line": 80,
+        "file": "background.js",
+        "line": 82,
         "exported": false
       },
       {
         "name": "getClientId",
         "kind": "function",
-        "file": "_legacy_otp_filler/background.js",
-        "line": 7,
-        "exported": false
-      },
-      {
-        "name": "getDomain",
-        "kind": "function",
         "file": "background.js",
-        "line": 15,
+        "line": 9,
         "exported": false
       },
       {
         "name": "getNearbyText",
         "kind": "function",
-        "file": "_legacy_otp_filler/content.js",
-        "line": 99,
+        "file": "content.js",
+        "line": 101,
         "exported": false
       },
       {
         "name": "getToken",
         "kind": "function",
-        "file": "_legacy_otp_filler/background.js",
-        "line": 98,
+        "file": "background.js",
+        "line": 100,
         "exported": false
       },
       {
         "name": "getValidToken",
         "kind": "function",
-        "file": "_legacy_otp_filler/background.js",
-        "line": 187,
+        "file": "background.js",
+        "line": 189,
         "exported": false
       },
       {
         "name": "gmailFetch",
         "kind": "function",
-        "file": "_legacy_otp_filler/background.js",
-        "line": 207,
+        "file": "background.js",
+        "line": 209,
         "exported": false
       },
       {
         "name": "init",
         "kind": "function",
-        "file": "_legacy_otp_filler/popup.js",
-        "line": 283,
+        "file": "popup.js",
+        "line": 309,
         "exported": false
       },
       {
         "name": "isVisible",
         "kind": "function",
-        "file": "_legacy_otp_filler/content.js",
-        "line": 87,
+        "file": "content.js",
+        "line": 89,
         "exported": false
       },
       {
         "name": "launchAuth",
         "kind": "function",
-        "file": "_legacy_otp_filler/background.js",
-        "line": 125,
+        "file": "background.js",
+        "line": 127,
         "exported": false
       },
       {
         "name": "looksLikeJunkNumberContext",
         "kind": "function",
-        "file": "_legacy_otp_filler/background.js",
-        "line": 290,
+        "file": "background.js",
+        "line": 292,
         "exported": false
       },
       {
         "name": "looksLikeOTPEmail",
         "kind": "function",
-        "file": "_legacy_otp_filler/background.js",
-        "line": 350,
+        "file": "background.js",
+        "line": 352,
         "exported": false
       },
       {
         "name": "makeIcon",
         "kind": "function",
-        "file": "_legacy_otp_filler/generate-icons.js",
+        "file": "generate-icons.js",
         "line": 22,
+        "exported": false
+      },
+      {
+        "name": "normalizeOTP",
+        "kind": "function",
+        "file": "background.js",
+        "line": 256,
+        "exported": false
+      },
+      {
+        "name": "parseSender",
+        "kind": "function",
+        "file": "background.js",
+        "line": 358,
+        "exported": false
+      },
+      {
+        "name": "refreshManageList",
+        "kind": "function",
+        "file": "popup.js",
+        "line": 239,
         "exported": false
       }
     ],
@@ -289,11 +304,17 @@
     "mostImported": []
   },
   "stats": {
-    "totalSymbols": 50,
+    "totalSymbols": 47,
     "exportedSymbols": 0,
-    "analysisTimeMs": 251
+    "analysisTimeMs": 614
   },
-  "keyFiles": [],
+  "keyFiles": [
+    {
+      "path": "package.json",
+      "description": "Package manifest",
+      "category": "config"
+    }
+  ],
   "navigation": {
     "tests": "**/*.test.{ts,js}",
     "config": [

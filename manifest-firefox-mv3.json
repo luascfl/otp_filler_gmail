@@ -1,0 +1,61 @@
+{
+  "manifest_version": 3,
+  "name": "OTP Filler for Gmail",
+  "version": "1.2.1",
+  "description": "Automatically extracts verification codes from Gmail and fills them into web forms.",
+  "permissions": [
+    "identity",
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://www.googleapis.com/*",
+    "<all_urls>"
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "OTP Filler for Gmail",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "oauth2": {
+    "client_id": "431363687179-cco5m4kdvds1hfiohitp4u4n3laobfos.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/gmail.readonly"
+    ]
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "otp-filler-gmail@luascfl.github.io",
+      "strict_min_version": "142.0",
+      "data_collection_permissions": {
+        "required": [
+          "personallyIdentifyingInfo",
+          "authenticationInfo",
+          "personalCommunications",
+          "websiteContent",
+          "websiteActivity"
+        ]
+      }
+    }
+  }
+}

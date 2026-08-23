@@ -15,9 +15,14 @@ AMO_API_KEY.txt
 AMO_API_SECRET.txt
 gemini-gcloud-key.json
 gcp-oauth.keys.json
+*client_secret*.json
 *API*
 .eslintcache/
 dist/
 build/
 *.zip
+*.xpi
+.web-ext-artifacts/
+.amo-last-version
+.firefox-test-profile/
 AGENTS.md

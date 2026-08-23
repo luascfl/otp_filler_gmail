@@ -1,19 +1,38 @@
 {
-  "name": "Gmail OTP Filler Setup",
-  "description": "Restore the OTP filler and get it running locally.",
+  "name": "Gmail OTP Filler Cross-Browser Distribution",
+  "description": "Maintain the Chrome release and deliver a privately signed Firefox variant.",
   "status": "in_progress",
   "stories": [
     {
       "id": "story-1",
       "title": "Restore Codebase and Load Extension",
-      "description": "Restore the OTP filler codebase, update the manifest, and load it into Chrome to verify basic UI and missing configs.",
+      "description": "Restore the OTP filler codebase, update the Chrome manifest, load it, and deploy the privacy policy.",
       "acceptanceCriteria": [
         "Codebase restored.",
-        "manifest.json exists.",
-        "Extension loads in Chrome without critical parsing errors.",
-        "User confirms UI opens."
+        "Chrome manifest exists.",
+        "Extension loads in Chrome.",
+        "Privacy policy deployed to GitHub Pages."
       ],
-      "status": "in_progress"
+      "status": "completed"
+    },
+    {
+      "id": "story-2",
+      "title": "Package and Privately Sign Firefox Extension",
+      "description": "Create a Firefox MV3 variant, preserve Gmail OAuth and automatic OTP filling, validate it, and obtain an unlisted AMO-signed XPI.",
+      "acceptanceCriteria": [
+        "Firefox manifest has a stable Gecko add-on ID and valid data declarations.",
+        "Firefox OAuth redirect is deterministic and documented.",
+        "Node tests pass.",
+        "web-ext lint returns zero errors, notices, and warnings.",
+        "Unlisted AMO signing returns a permanent-install XPI.",
+        "Signed XPI completes Gmail login and OTP form smoke testing."
+      ],
+      "status": "blocked",
+      "blockedBy": [
+        "Firefox OAuth redirect URI must be added to the Google Cloud client.",
+        "AMO_API_KEY and AMO_API_SECRET are required for signing.",
+        "Signed XPI is required for the final Firefox smoke test."
+      ]
     }
   ]
 }

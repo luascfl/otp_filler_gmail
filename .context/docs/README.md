@@ -2,31 +2,34 @@
 
 Welcome to the repository knowledge base. Start with the project overview, then dive into specific guides as needed.
 
-## Core Guides
-- [Project Overview](./project-overview.md)
-- [Architecture Notes](./architecture.md)
-- [Development Workflow](./development-workflow.md)
-- [Testing Strategy](./testing-strategy.md)
-- [Glossary & Domain Concepts](./glossary.md)
-- [Data Flow & Integrations](./data-flow.md)
-- [Security & Compliance Notes](./security.md)
-- [Tooling & Productivity Guide](./tooling.md)
+## Core guides
 
-## Repository Snapshot
-- `_legacy_otp_filler/`
-- `AGENTS.md/`
-- `background.js/`
-- `GEMINI.md/`
-- `manifest.json/`
+- [Project overview](./project-overview.md)
+- [Architecture notes](./architecture.md)
+- [Development workflow](./development-workflow.md)
+- [Testing strategy](./testing-strategy.md)
+- [Security notes](./security.md)
+- [Tooling guide](./tooling.md)
 
-## Document Map
-| Guide | File | Primary Inputs |
+## Repository snapshot
+
+- `background.js`, OAuth, Gmail API, OTP extraction, and polling
+- `content.js`, OTP field detection and form interaction
+- `popup.html`, `popup.js`, `popup.css`, user interface
+- `manifest.json`, Chrome manifest
+- `manifest-firefox-mv3.json`, Firefox manifest and AMO identity
+- `*.test.js`, Node contract tests
+- `privacy-policy/`, published privacy policy
+
+Credential JSON files, generated packages, and context exports are intentionally excluded from this index.
+
+## Document map
+
+| Guide | File | Primary inputs |
 | --- | --- | --- |
-| Project Overview | `project-overview.md` | Roadmap, README, stakeholder notes |
-| Architecture Notes | `architecture.md` | ADRs, service boundaries, dependency graphs |
-| Development Workflow | `development-workflow.md` | Branching rules, CI config, contributing guide |
-| Testing Strategy | `testing-strategy.md` | Test configs, CI gates, known flaky suites |
-| Glossary & Domain Concepts | `glossary.md` | Business terminology, user personas, domain rules |
-| Data Flow & Integrations | `data-flow.md` | System diagrams, integration specs, queue topics |
-| Security & Compliance Notes | `security.md` | Auth model, secrets management, compliance requirements |
-| Tooling & Productivity Guide | `tooling.md` | CLI scripts, IDE configs, automation workflows |
+| Project overview | `project-overview.md` | README, manifests, release status |
+| Architecture notes | `architecture.md` | Runtime files, manifests, Graphify |
+| Development workflow | `development-workflow.md` | npm scripts and release flow |
+| Testing strategy | `testing-strategy.md` | Node tests and web-ext gates |
+| Security notes | `security.md` | OAuth, permissions, storage, signing |
+| Tooling guide | `tooling.md` | npm, web-ext, Graphify |

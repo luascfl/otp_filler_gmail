@@ -9,6 +9,8 @@
 (() => {
   if (window.__otpFillerLoaded) return;
   window.__otpFillerLoaded = true;
+  let isPolling = false;
+
 
   // ── OTP field detection ───────────────────────────────────────────────────────
 
@@ -225,6 +227,21 @@
   // ── Message listener ──────────────────────────────────────────────────────────
 
   chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+    if (msg.type === "OTP_FOUND") {
+      const result = findOTPField();
+      if (!result) return;
+
+      if (result.type === "split") {
+        fillSplit(result.fields, msg.code);
+      } else {
+        fillSingle(result.field, msg.code);
+      }
+
+      const input = result.type === "split" ? result.fields[0] : result.field;
+      input.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, keyCode: 13, key: 'Enter' }));
+      return;
+    }
+
     if (msg.type !== "FILL_OTP") return;
 
     const result = findOTPField();
@@ -258,4 +275,14 @@
 
     sendResponse({ ok: true });
   });
+
+  // ── Polling ───────────────────────────────────────────────────────────────────
+
+  setInterval(() => {
+    const result = findOTPField();
+    if (result && !isPolling) {
+      isPolling = true;
+      chrome.runtime.sendMessage({ type: "START_POLLING" });
+    }
+  }, 1000);
 })();

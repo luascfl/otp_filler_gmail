@@ -1,102 +1,48 @@
 ---
 type: doc
 name: testing-strategy
-description: Test frameworks, patterns, coverage requirements, and quality gates
+description: Test and validation gates for Chrome and Firefox builds
 category: testing
-generated: 2026-07-23
-status: unfilled
+generated: 2026-08-23
+status: filled
 scaffoldVersion: "2.0.0"
 ---
-## Testing Strategy
+## Testing strategy
 
-This document outlines the testing strategy for maintaining code quality.
+Tests use Node's built-in `node:test` runner and remain co-located as `*.test.js` files.
 
-**Testing Philosophy**:
-- Tests should be fast, isolated, and deterministic
-- Follow the test pyramid: many unit tests, fewer integration tests, minimal E2E tests
-- Test behavior, not implementation details
-- Every bug fix should include a regression test
+## Automated contracts
 
-## Test Types
+- `background.test.js` covers OTP extraction, normalization, keyword prefiltering, and false-positive rejection.
+- `popup.test.js` covers asynchronous clipboard behavior and stable success feedback.
+- `firefox-manifest.test.js` covers the Firefox manifest runtime contract, permissions, stable add-on ID, OAuth client, and deterministic redirect URI.
 
-**Unit Tests**:
-- Framework: Jest / Vitest
-- Location: `__tests__/` or co-located `*.test.ts` files
-- Purpose: Test individual functions and components in isolation
-- Mocking: Use jest mocks for external dependencies
+Run all tests:
 
-**Integration Tests**:
-- Framework: Jest / Vitest
-- Location: `tests/integration/` or `*.integration.test.ts`
-- Purpose: Test feature workflows and component interactions
-- Setup: May require test database or external services
-
-**E2E Tests** (if applicable):
-- Framework: Playwright / Cypress
-- Location: `e2e/` or `tests/e2e/`
-- Purpose: Test critical user paths end-to-end
-- Environment: Requires full application stack
-
-## Running Tests
-
-**Commands**:
 ```bash
-# Run all tests
-npm run test
-
-# Run tests in watch mode (for development)
-npm run test -- --watch
-
-# Run tests with coverage report
-npm run test -- --coverage
-
-# Run specific test file
-npm run test -- path/to/file.test.ts
-
-# Run tests matching pattern
-npm run test -- --testNamePattern="pattern"
+npm test
 ```
 
-## Quality Gates
+## Firefox quality gates
 
-**Coverage Requirements**:
-- Minimum overall coverage: 80%
-- New code should have higher coverage
-- Critical paths require 100% coverage
+```bash
+npm run build:firefox
+npm run package:firefox
+```
 
-**Pre-merge Checks**:
-- [ ] All tests pass
-- [ ] Coverage thresholds met
-- [ ] Linting passes (`npm run lint`)
-- [ ] Type checking passes (`npm run typecheck`)
-- [ ] Build succeeds (`npm run build`)
+`build:firefox` stages the exact extension payload and runs `web-ext lint --warnings-as-errors`. A releasable source build requires zero errors, zero notices, and zero warnings.
 
-**CI Pipeline**:
-- Tests run automatically on every PR
-- Coverage reports generated and compared to baseline
-- Failed checks block merge
+`package:firefox` creates `web-ext-artifacts/otp-filler-gmail-firefox-1.2.1.zip`. This archive proves packaging and supports AMO submission, but it is not a permanent-install artifact.
 
-## Troubleshooting
+## Release verification
 
-**Common Issues**:
+1. Add the Firefox OAuth redirect URI to the Google Cloud Web application client.
+2. Sign with `npm run sign:firefox` and AMO JWT credentials.
+3. Install the signed XPI through `about:addons`.
+4. Add a Gmail account and complete OAuth.
+5. Open a page with a single OTP field and verify automatic fill.
+6. Repeat with six one-character split fields.
+7. Verify popup copy and manual `Fill & Submit` fallback.
+8. Remove the account and confirm its token is revoked or expires naturally.
 
-*Tests timing out*:
-- Increase timeout for slow operations
-- Check for unresolved promises
-- Verify mocks are properly configured
-
-*Flaky tests*:
-- Avoid time-dependent assertions
-- Use proper async/await patterns
-- Isolate tests from external state
-
-*Environment issues*:
-- Ensure Node version matches project requirements
-- Clear node_modules and reinstall if dependencies are corrupted
-- Check for conflicting global installations
-
-## Related Resources
-
-<!-- Link to related documents for cross-navigation. -->
-
-- [development-workflow.md](./development-workflow.md)
+The signed-XPI smoke is the final browser gate. `web-ext lint` cannot prove OAuth or form interaction behavior by itself.

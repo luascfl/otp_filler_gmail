@@ -1,6 +1,6 @@
 # OTP Filler for Gmail
 
-Chrome extension that automatically extracts verification codes from your Gmail and fills them into web forms with one click.
+Chrome and Firefox extension that automatically extracts verification codes from Gmail and fills them into web forms.
 
 ## Features
 
@@ -9,8 +9,8 @@ Chrome extension that automatically extracts verification codes from your Gmail 
 - **Auto-copy** — Copies the latest code to your clipboard when you open the popup
 - **Auto-fill & submit** — Fills the code into the page's OTP field and clicks the submit button
 - **Smart detection** — Finds OTP input fields using W3C standards, name/placeholder heuristics, and nearby label text
-- **Works with frameworks** — Compatible with React, Vue, Angular, and other controlled input frameworks
-- **On-demand only** — Content script is injected only when you click "Fill & Submit", not on every page
+- **Automatic OTP watch** — Detects OTP fields and polls Gmail for up to three minutes while a login form is waiting
+- **Manual fallback** — The popup still lets you copy a code or trigger **Fill & Submit**
 
 ## Setup
 
@@ -66,6 +66,34 @@ Then open `manifest.json` and replace the `client_id` value:
 
 Go to `chrome://extensions` and click the refresh icon on the extension card.
 
+### Firefox private installation
+
+Firefox uses `manifest-firefox-mv3.json`, the stable add-on ID
+`otp-filler-gmail@luascfl.github.io`, and this Google OAuth redirect URI:
+
+```text
+https://b08a966e2cd56d5fdbe08615b80148bd4f58eaf3.extensions.allizom.org/
+```
+
+Add that URI to the same **Web application** OAuth client in Google Cloud before
+signing. Then build and validate the private package:
+
+```bash
+npm run package:firefox
+```
+
+Permanent installation on regular Firefox requires Mozilla's signature. Create
+JWT credentials at [addons.mozilla.org](https://addons.mozilla.org/developers/addon/api/key/),
+keep them outside the repository, and sign on the unlisted channel:
+
+```bash
+AMO_API_KEY='user:...' AMO_API_SECRET='...' npm run sign:firefox
+```
+
+Install the resulting signed `.xpi` from `about:addons` using
+**Install Add-on From File**. An unlisted add-on is signed for private
+distribution and does not appear in AMO search.
+
 ## Usage
 
 1. Click the extension icon in your toolbar
@@ -78,8 +106,8 @@ Go to `chrome://extensions` and click the refresh icon on the extension card.
 
 | Component | Role |
 |-----------|------|
-| `background.js` | Service worker — manages multi-account OAuth, fetches recent emails via Gmail API, extracts OTP codes |
-| `content.js` | Injected on-demand into the active tab — detects OTP input fields, fills values, and auto-clicks submit buttons |
+| `background.js` | Chrome service worker / Firefox background script — manages multi-account OAuth, fetches recent emails via Gmail API, extracts OTP codes |
+| `content.js` | Detects OTP fields, starts a bounded Gmail polling window, fills values, and auto-clicks submit buttons |
 | `popup.html/js/css` | Extension popup — account management, code display, copy/fill actions |
 
 ### OTP detection
@@ -106,20 +134,21 @@ After filling the code, the extension looks for nearby submit/verify/confirm but
 | `identity` | OAuth sign-in via `launchWebAuthFlow` |
 | `gmail.readonly` | Read emails to extract verification codes |
 | `storage` | Persist the account list (emails only); access tokens stay in memory-only session storage |
-| `activeTab` + `scripting` | Inject content script and fill OTP fields in the current tab (on-demand only) |
+| `activeTab` + `scripting` | Re-inject the filler on demand when **Fill & Submit** is clicked |
+| `<all_urls>` | Detect OTP forms automatically and fill a newly received code on the page that requested it |
 
 The extension **never sends** your emails or tokens to any external server. All processing happens locally.
 
 ## Security & Privacy
 
 - **Local-only processing** — All email fetching, OTP extraction, and form filling happens entirely on your device. No data is sent to any external server.
-- **Minimal permissions** — The extension requests only `gmail.readonly` (no send/modify access) and injects content scripts on-demand, not on every page.
+- **Read-only Gmail access** — The extension requests `gmail.readonly`; it cannot send, delete, or modify email.
 - **Short-lived tokens, never on disk** — OAuth2 access tokens expire after 1 hour and are refreshed silently. Tokens are held only in `chrome.storage.session` (in-memory, cleared when the browser exits) and are revoked when you remove an account. Only account emails are persisted to `chrome.storage.local`.
-- **Extension isolation** — Chrome enforces strict storage isolation between extensions. No other extension or webpage can access your stored tokens.
-- **No background activity** — The extension only scans Gmail when you open the popup. There is no persistent background polling or data collection.
+- **Extension isolation** — Chrome and Firefox isolate extension storage from websites and other extensions.
+- **Bounded background activity** — Gmail polling starts only when an OTP field is visible and stops after three minutes.
 - **Open source** — All code is in this repo. There is no minified or obfuscated code.
 
-See the full [Privacy Policy](privacy-policy.md).
+See the full [Privacy Policy](privacy-policy/index.html).
 
 ## Other Chromium browsers
 
