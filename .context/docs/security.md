@@ -48,4 +48,4 @@ Firefox's `data_collection_permissions.required` categories describe data proces
 
 ## Distribution trust
 
-Regular Firefox requires Mozilla's signature for permanent installation. The project uses AMO's `unlisted` channel so the signed XPI can be distributed privately without a public listing. The signed XPI must be retained as the installable artifact and verified before use.
+Regular Firefox and LibreWolf require Mozilla's signature for permanent installation. Firefox 1.2.1 is approved on AMO's `unlisted` channel, so it has no public AMO listing. The signed XPI is retained in a private GitHub release; access requires authorization to that repository.

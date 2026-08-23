@@ -1,7 +1,7 @@
 {
   "name": "Gmail OTP Filler Cross-Browser Distribution",
   "description": "Maintain the Chrome release and deliver a privately signed Firefox variant.",
-  "status": "in_progress",
+  "status": "completed",
   "stories": [
     {
       "id": "story-1",
@@ -27,12 +27,7 @@
         "Unlisted AMO signing returns a permanent-install XPI.",
         "Signed XPI completes Gmail login and OTP form smoke testing."
       ],
-      "status": "blocked",
-      "blockedBy": [
-        "Firefox OAuth redirect URI must be added to the Google Cloud client.",
-        "AMO_API_KEY and AMO_API_SECRET are required for signing.",
-        "Signed XPI is required for the final Firefox smoke test."
-      ]
+      "status": "completed"
     }
   ]
 }

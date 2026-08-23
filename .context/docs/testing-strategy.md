@@ -46,3 +46,7 @@ npm run package:firefox
 8. Remove the account and confirm its token is revoked or expires naturally.
 
 The signed-XPI smoke is the final browser gate. `web-ext lint` cannot prove OAuth or form interaction behavior by itself.
+
+## Verified Firefox release
+
+Firefox 1.2.1 passed AMO validation and signing on the `unlisted` channel. The signed XPI was recognized by Firefox with `signedState: 2`, installed active and enabled in the owner's default LibreWolf profile, and the owner confirmed Gmail OAuth and OTP behavior work.

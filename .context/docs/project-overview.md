@@ -38,4 +38,4 @@ AMO_API_KEY='user:...' AMO_API_SECRET='...' npm run sign:firefox
 
 ## Current state
 
-The Firefox source variant builds cleanly with `web-ext lint`, its manifest and OAuth redirect are covered by tests, and the unsigned private package exists under `web-ext-artifacts/`. AMO signing and signed-XPI installation require the owner's AMO JWT credentials. The Google OAuth client must include the Firefox redirect URI before Gmail login can succeed.
+Firefox 1.2.1 is approved on AMO's `unlisted` channel. Its signed XPI is installed and active in the owner's default LibreWolf profile, Gmail OAuth and OTP behavior were confirmed by the owner, and the installable artifact is retained in a private GitHub release.
